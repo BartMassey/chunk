@@ -1,7 +1,7 @@
 HC = ghc
 HCFLAGS = -Wall -O2
 
-all: criterion.html doc/index.html
+all: criterion.html doc/index.html hunit.txt
 
 criterion: Chunk.hs criterion.hs
 	$(HC) $(HCFLAGS) --make criterion.hs
@@ -12,8 +12,11 @@ hunit: Chunk.hs hunit.hs
 criterion.html: criterion
 	./criterion --output criterion.html
 
+hunit.txt: hunit
+	./hunit 2>&1 | tee hunit.txt
+
 doc/index.html: Chunk.hs
 	cd doc && haddock -h ../Chunk.hs
 
 clean:
-	-rm -rf criterion *.o *.hi criterion.html doc
+	-rm -rf criterion hunit *.o *.hi criterion.html hunit.txt doc
