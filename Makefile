@@ -1,7 +1,13 @@
+HC = ghc
+HCFLAGS = -Wall -O2
+
 all: criterion.html doc/index.html
 
 criterion: Chunk.hs criterion.hs
-	ghc -Wall -O2 --make criterion.hs
+	$(HC) $(HCFLAGS) --make criterion.hs
+
+hunit: Chunk.hs hunit.hs
+	$(HC) $(HCFLAGS) --make hunit.hs
 
 criterion.html: criterion
 	./criterion --output criterion.html
