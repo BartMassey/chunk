@@ -21,6 +21,26 @@ chunk n0 es0 =
           (e : c) : cs
 
 main :: IO ()
-main = defaultMain [ bgroup "chunk" [
-    bench "1,100000"  $ nf (chunk 1) ([1..100000]::[Int]),
-    bench "1000,100000"  $ nf (chunk 1000) ([1..100000]::[Int]) ] ]
+main = defaultMain [ bgroup "groupsize" genBenchGroup,
+                     bgroup "listsize" genBenchList ]
+
+genBenchGroup :: [Benchmark]
+genBenchGroup =
+    map bench1 subterms
+    where
+      lognList = 6
+      nList = 10^lognList :: Int
+      subterms = [1..9] ++ [10,20..90] ++ [10^i | i <- [2..lognList]]
+      bench1 n =
+          bench (show nList ++ "," ++ show n) $
+          nf (chunk n) ([1..lognList] :: [Int])
+
+genBenchList :: [Benchmark]
+genBenchList =
+    map bench1 subterms
+    where
+      subterms = [10^i | i <- [3..7] :: [Int]]
+      bench1 n =
+          bench ("1000," ++ show n) $
+          nf (chunk 1000) ([1..n] :: [Int])
+
