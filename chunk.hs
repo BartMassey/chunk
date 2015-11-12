@@ -11,8 +11,8 @@ chunk :: Int -> [a] -> [[a]]
 chunk n0 _ | n0 < 1 =
     error "Data.List.chunk: non-positive count"
 chunk _ [] = []
-chunk n0 es =
-    go n0 es
+chunk n0 es0 =
+    go n0 es0
     where
       go _ [] = [[]]
       go 0 es = [] : go n0 es
