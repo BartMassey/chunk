@@ -12,8 +12,8 @@ chunk _ [] = []
 chunk n0 es =
     go n0 es
     where
-      go _ [e] = [[e]]
-      go 1 (e : es) = [e] : go n0 es
+      go _ [] = [[]]
+      go 0 es = [] : go n0 es
       go n (e : es) =
           let c : cs = go (n - 1) es in
           (e : c) : cs
