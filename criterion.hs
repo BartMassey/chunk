@@ -1,25 +1,6 @@
-module Main where
-
 import Criterion.Main
-import System.Environment
 
--- | Given a positive chunk size and a list, group the list up
--- into chunks of the given size. Any shortfall is in the last chunk.
---
--- > chunk 3 [1..5] == [[1,2,3],[4,5]]
---
-chunk :: Int -> [a] -> [[a]]
-chunk n0 _ | n0 < 1 =
-    error "Data.List.chunk: non-positive count"
-chunk _ [] = []
-chunk n0 es0 =
-    go n0 es0
-    where
-      go _ [] = [[]]
-      go 0 es = [] : go n0 es
-      go n (e : es) =
-          let c : cs = go (n - 1) es in
-          (e : c) : cs
+import Chunk
 
 -- Need constrained type for the type system to
 -- figure out what is going on.
@@ -27,14 +8,7 @@ pow10 :: Int -> Int
 pow10 i = 10^i
 
 main :: IO ()
-main = do
-  mode : args <- getArgs
-  case mode of
-    "--criterion" -> withArgs args criterionMain
-    _ -> error "chunk: bad mode"
-         
-criterionMain :: IO ()
-criterionMain =
+main =
     defaultMain [
         genBench "groupsize"
          (\g l -> show l ++ "," ++ show g)

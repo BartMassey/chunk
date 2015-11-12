@@ -1,13 +1,13 @@
-all: chunk chunk.html doc/index.html
+all: criterion.html doc/index.html
 
-chunk: chunk.hs
-	ghc -Wall -O2 --make chunk.hs
+criterion: Chunk.hs criterion.hs
+	ghc -Wall -O2 --make criterion.hs
 
-chunk.html: chunk
-	./chunk --criterion --output chunk.html
+criterion.html: criterion
+	./criterion --output criterion.html
 
-doc/index.html: chunk.hs
-	cd doc && haddock -h ../chunk.hs
+doc/index.html: Chunk.hs
+	cd doc && haddock -h ../Chunk.hs
 
 clean:
-	-rm -rf chunk chunk.o chunk.hi chunk.html doc
+	-rm -rf criterion *.o *.hi criterion.html doc
