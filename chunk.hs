@@ -1,6 +1,7 @@
 module Main where
 
 import Criterion.Main
+import System.Environment
 
 -- | Given a positive chunk size and a list, group the list up
 -- into chunks of the given size. Any shortfall is in the last chunk.
@@ -26,7 +27,15 @@ pow10 :: Int -> Int
 pow10 i = 10^i
 
 main :: IO ()
-main = defaultMain [
+main = do
+  mode : args <- getArgs
+  case mode of
+    "--criterion" -> withArgs args criterionMain
+    _ -> error "chunk: bad mode"
+         
+criterionMain :: IO ()
+criterionMain =
+    defaultMain [
         genBench "groupsize"
          (\g l -> show l ++ "," ++ show g)
          ([1..9] ++ [10,20..90] ++ [pow10 i | i <- [2..6]])
