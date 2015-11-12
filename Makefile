@@ -7,7 +7,7 @@ chunk.html: chunk
 	./chunk --output chunk.html
 
 doc/index.html: chunk.hs
-	cd doc && haddock -h ../chunk.html
+	cd doc && haddock -h ../chunk.hs
 
 clean:
 	-rm -rf chunk chunk.o chunk.hi chunk.html doc
