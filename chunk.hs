@@ -1,4 +1,6 @@
-module Chunk where
+module Main where
+
+import Criterion.Main
 
 -- | Given a positive chunk size and a list, group the list up
 -- into chunks of the given size. Any shortfall is in the last chunk.
@@ -17,3 +19,8 @@ chunk n0 es =
       go n (e : es) =
           let c : cs = go (n - 1) es in
           (e : c) : cs
+
+main :: IO ()
+main = defaultMain [ bgroup "chunk" [
+    bench "1,100000"  $ nf (chunk 1) ([1..100000]::[Int]),
+    bench "1000,100000"  $ nf (chunk 1000) ([1..100000]::[Int]) ] ]
