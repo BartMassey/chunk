@@ -20,27 +20,28 @@ chunk n0 es0 =
           let c : cs = go (n - 1) es in
           (e : c) : cs
 
+-- Need constrained type for the type system to
+-- figure out what is going on.
+pow10 :: Int -> Int
+pow10 i = 10^i
+
 main :: IO ()
-main = defaultMain [ bgroup "groupsize" genBenchGroup,
-                     bgroup "listsize" genBenchList ]
+main = defaultMain [
+        genBench "groupsize"
+         (\g l -> show l ++ "," ++ show g)
+         ([1..9] ++ [10,20..90] ++ [pow10 i | i <- [2..6]])
+         [pow10 6],
+        genBench "listsize"
+         (\g l -> show g ++ "," ++ show l)
+         [1000]
+         [pow10 i | i <- [3..7]] ]
 
-genBenchGroup :: [Benchmark]
-genBenchGroup =
-    map bench1 subterms
+-- Given a label for the benchmark group and a labeling
+-- function for the instances, generate a benchmark for each
+-- group size and list size in the lists.
+genBench :: String -> (Int -> Int -> String) -> [Int] -> [Int] -> Benchmark
+genBench label labelf gSizes lSizes =
+    bgroup label $ map bench1 [ (g, l) | g <- gSizes, l <- lSizes ]
     where
-      lognList = 6
-      nList = 10^lognList :: Int
-      subterms = [1..9] ++ [10,20..90] ++ [10^i | i <- [2..lognList]]
-      bench1 n =
-          bench (show nList ++ "," ++ show n) $
-          nf (chunk n) ([1..lognList] :: [Int])
-
-genBenchList :: [Benchmark]
-genBenchList =
-    map bench1 subterms
-    where
-      subterms = [10^i | i <- [3..7] :: [Int]]
-      bench1 n =
-          bench ("1000," ++ show n) $
-          nf (chunk 1000) ([1..n] :: [Int])
-
+      bench1 (g, l) =
+          bench (labelf g l) $ nf (chunk g) ([1..l] :: [Int])
