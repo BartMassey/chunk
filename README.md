@@ -1,4 +1,5 @@
 # Data.List.chunk
+Copyright &copy; 2015 Bart Massey
 
 This Haskell utility `chunk` function is proposed for
 inclusion in `Data.List`. The `chunk` function groups a list
