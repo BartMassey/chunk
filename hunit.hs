@@ -1,3 +1,8 @@
+-- Copyright © 2015 Bart Massey
+-- [This work is licensed under the "3-clause BSD License".]
+-- Please see the file LICENSE in the source
+-- distribution of this software for license terms.
+
 {-# LANGUAGE ScopedTypeVariables #-}
 
 import Control.Exception
