@@ -16,6 +16,9 @@ The code is believed to be correct, by inspection and test.
 [HUnit](http://sourceforge.net/projects/hunit/) unit tests
 are included here.
 
+By construction and according to the tests here, `chunk` is
+fully lazy.
+
 To build everything -- code, benchmark results
 (`criterion.html`), unit test results (`hunit.txt`) and
 [Haddock](https://www.haskell.org/haddock/) documentation
