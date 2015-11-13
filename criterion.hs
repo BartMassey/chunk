@@ -27,4 +27,4 @@ genBench label labelf gSizes lSizes =
     bgroup label $ map bench1 [ (g, l) | g <- gSizes, l <- lSizes ]
     where
       bench1 (g, l) =
-          bench (labelf g l) $ nf (chunk g) ([1..l] :: [Int])
+          bench (labelf g l) $ nf (flip chunk ([1..l] :: [Int])) g
