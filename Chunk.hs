@@ -22,3 +22,23 @@ chunk n0 es0 =
       go n (e : es) =
           let c : cs = go (n - 1) es in
           (e : c) : cs
+
+-- | Alternate implementation of chunk using 'splitAt'.
+chunk_splitat :: Int -> [a] -> [[a]]
+chunk_splitat n _ | n < 1 =
+    error "Data.List.chunk_splitat: non-positive count"
+chunk_splitat _ [] = []
+chunk_splitat n es =
+    c : chunk_splitat n cs
+    where
+      (c, cs) = splitAt n es
+
+-- | Naive implementation of chunk.
+chunk_naive :: Int -> [a] -> [[a]]
+chunk_naive n _ | n < 1 =
+    error "Data.List.chunk_naive: non-positive count"
+chunk_naive _ [] = []
+chunk_naive n l
+    | n >= length l = [l]
+    | otherwise =
+        take n l : chunk_naive n (drop n l)
