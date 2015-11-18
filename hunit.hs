@@ -92,8 +92,7 @@ testF f fName =
 tests :: Test
 tests = TestList [
          "chunk" ~: testF chunk "chunk",
-         "chunk_splitat" ~: testF chunk_splitat "chunk_splitat",
-         "chunk_naive" ~: testF chunk_naive "chunk_naive" ]
+         "chunk_splitat" ~: testF chunk_splitat "chunk_splitat" ]
 
 main :: IO ()
 main = do

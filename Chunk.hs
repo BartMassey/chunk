@@ -32,13 +32,3 @@ chunk_splitat n es =
     c : chunk_splitat n cs
     where
       (c, cs) = splitAt n es
-
--- | Naive implementation of chunk.
-chunk_naive :: Int -> [a] -> [[a]]
-chunk_naive n _ | n < 1 =
-    error "Data.List.chunk_naive: non-positive count"
-chunk_naive _ [] = []
-chunk_naive n l
-    | n >= length l = [l]
-    | otherwise =
-        take n l : chunk_naive n (drop n l)
