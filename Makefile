@@ -15,7 +15,7 @@ hunit: Chunk.hs hunit.hs
 	$(HC) $(HCFLAGS) --make hunit.hs
 
 criterion.html: criterion
-	./criterion --output criterion.html
+	./criterion 6 7 --output criterion.html
 
 hunit.txt: hunit
 	./hunit 2>&1 | tee hunit.txt
