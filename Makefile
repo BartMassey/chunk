@@ -6,7 +6,7 @@
 HC = ghc
 HCFLAGS = -Wall -O2
 
-all: criterion.html doc/index.html hunit.txt
+all: hunit.txt criterion.html doc/index.html
 
 criterion: Chunk.hs criterion.hs
 	$(HC) $(HCFLAGS) --make criterion.hs
