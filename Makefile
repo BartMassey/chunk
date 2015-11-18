@@ -21,7 +21,7 @@ hunit.txt: hunit
 	./hunit 2>&1 | tee hunit.txt
 
 doc/index.html: Chunk.hs
-	-@mkdir doc
+	@mkdir -p doc
 	cd doc && haddock -h ../Chunk.hs
 
 clean:
